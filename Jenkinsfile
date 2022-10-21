@@ -1,27 +1,18 @@
-node {
-
-     stage('code clone') {
-        git 'https://github.com/nagnani/ks.git'
-    } 
-    
-      stage('code clean') {
-         sh 'mvn clean'
+pipeline {
+    agent any 
+    tools {
+        maven 'Maven 3.8.5'
     }
-
-      stage('mvn validate') {
-         sh 'mvn validate'
+    stages {
+        stage('git clone') {
+            steps{
+                git 'https://github.com/nagnani/ks.git'
+            }
+        }
+        stage('maven version') {
+            steps{
+                sh 'mvn --version'
+            }
+        }
     }
-
-      stage('mvn compile') {
-         sh 'mvn compile'
-    } 
- 
-         stage('mvn test') {
-         sh 'mvn test'
-    } 
- 
-         stage('mvn package') {
-          sh 'mvn package'
-    }  
-}    
-
+}
